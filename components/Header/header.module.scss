@@ -1,0 +1,21 @@
+.Header {
+  background-color: white;
+  position: fixed;
+  top: 0;
+  right: 0;
+  left: 0;
+  padding: 20px 0;
+  z-index: 1000;
+
+  &-List {
+    display: flex;
+    justify-content: space-around;
+  }
+
+  &-Link {
+    display: flex;
+    align-items: center;
+    color: white;
+  }
+
+}
