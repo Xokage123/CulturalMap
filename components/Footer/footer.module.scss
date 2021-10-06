@@ -1,9 +1,9 @@
 .Footer {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  padding: 15px 0;
   color: white;
   background-color: black;
-
-  &-Icon {
-    max-width: 50px;
-    max-height: 50px;
-  }
 }

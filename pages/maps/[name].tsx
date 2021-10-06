@@ -8,6 +8,8 @@ import { Map } from 'components/Map';
 import { arrayPathsRouting } from 'data/persons';
 // Api
 import { getPerson } from 'API/persons';
+// Style__Material
+import Button from '@material-ui/core/Button';
 
 const CreateLayer = dynamic(
 	() => {
@@ -24,11 +26,13 @@ const InformationAboutMap = (
 	console.log(props);
 	const router: NextRouter = useRouter();
 	return (
-		<div>
-			<button onClick={() => router.back()}>Назад</button>
+		<>
+			<Button onClick={() => router.back()} variant="outlined" color="error">
+				Назад
+			</Button>
 			<p>Страница: {router.query.name}</p>
 			<Map DynamicElement={CreateLayer} />
-		</div>
+		</>
 	);
 };
 

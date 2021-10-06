@@ -16,7 +16,9 @@ const MainLayout: React.FC<ILauoutProps> = (props) => {
 	return (
 		<StrictMode>
 			<Header />
-			<main className={styles.Main}>{children}</main>
+			<main className={styles.Main}>
+				<div className="main-container">{children}</div>
+			</main>
 			<Footer />
 		</StrictMode>
 	);
