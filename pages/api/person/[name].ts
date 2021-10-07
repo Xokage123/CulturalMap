@@ -8,12 +8,11 @@ export default function handler(
   req: NextApiRequest,
   res: NextApiResponse<IPersonInformation>
 ) {
-  const person = arrayPersons.find(
+  const personInfo = arrayPersons.find(
     (element) => element.initial === req.query.name
   );
-  console.log(req.query);
-  if (person) {
-    res.status(200).json(person);
+  if (personInfo) {
+    res.status(200).json(personInfo);
   } else {
     new Error('данный элемент не был найден');
   }

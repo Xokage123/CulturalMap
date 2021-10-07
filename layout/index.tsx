@@ -17,7 +17,9 @@ const MainLayout: React.FC<ILauoutProps> = (props) => {
 		<StrictMode>
 			<Header />
 			<main className={styles.Main}>
-				<div className="main-container">{children}</div>
+				<div className={`main-container d-flex flex-wrap flex-column`}>
+					{children}
+				</div>
 			</main>
 			<Footer />
 		</StrictMode>

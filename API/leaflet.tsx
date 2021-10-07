@@ -2,6 +2,8 @@
 import L from 'leaflet';
 // React
 import { useEffect } from 'react';
+// Api
+import { getInfoPlace } from 'API/yandex';
 // Interface
 import type { IDynamicProps } from 'interfaces/interface/map';
 
@@ -16,20 +18,25 @@ const createLayer = (url: string) => {
 	);
 };
 
+let map: L.Map;
+
 const Component = (props: IDynamicProps) => {
-	const { nameContainer } = props;
+	const { mapConfig, arrayPlaceInfo, nameContainer, namePopup } = props;
 	useEffect(() => {
-		const map = L.map(nameContainer, {
-			center: [51.505, -0.09],
-			zoom: 13,
+		getInfoPlace(arrayPlaceInfo[0].place).then((answer) => {
+			const coordinatePlace = answer.Point.pos.split(' ');
+			map = L.map(nameContainer, mapConfig).setView(coordinatePlace);
+			const marker: L.Marker = L.marker(coordinatePlace)
+				.bindPopup(`${document.querySelector(`.${namePopup}`)?.innerHTML}`)
+				.addTo(map);
+			createLayer(
+				`${process.env.NEXT_PUBLIC_BASEURL_MAPBOX}${process.env.NEXT_PUBLIC_ID_CULTURAL_MAP}`
+			).addTo(map);
 		});
-		createLayer(
-			`${process.env.NEXT_PUBLIC_BASEURL_MAPBOX}${process.env.NEXT_PUBLIC_ID_CULTURAL_MAP}`
-		).addTo(map);
 		return () => {
-			map.remove();
+			map ? map.remove() : null;
 		};
-	}, [nameContainer]);
+	}, [arrayPlaceInfo, mapConfig, nameContainer, namePopup]);
 
 	return <></>;
 };
