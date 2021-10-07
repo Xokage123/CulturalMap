@@ -1,7 +1,7 @@
 import type { IPersonInformation } from '../../interfaces/interface/person';
 
 const DYNAMIC_PARAMETER = 'name';
-export const INITIAL_PUSHKIN: string = 'Alexander Sergeevich Pushkin';
+export const INITIAL_PUSHKIN: string = 'Alexander-Sergeevich-Pushkin';
 
 // Масим со всеми личностями
 export const arrayPersons: Array<IPersonInformation> = [

@@ -121,16 +121,24 @@ const Home = ({ persons }: InferGetStaticPropsType<typeof getStaticProps>) => {
 };
 
 export const getStaticProps = async () => {
-	const test = await axios({
-		method: 'get',
-		url: routes.person.api,
-		baseURL: String(process.env.NEXT_PUBLIC_PATH),
-	});
-	return {
-		props: {
-			persons: test.data,
-		},
-	};
+	try {
+		const test = await axios({
+			method: 'get',
+			url: routes.person.api,
+			baseURL: String(process.env.NEXT_PUBLIC_PATH),
+		});
+		return {
+			props: {
+				persons: test.data,
+			},
+		};
+	} catch (er) {
+		return {
+			props: {
+				persons: [],
+			},
+		};
+	}
 };
 
 export default Home;

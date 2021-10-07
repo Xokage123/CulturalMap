@@ -8,6 +8,5 @@ export const getPerson = async (name: string) => {
     url: `${routes.person.api}/${name}`,
     baseURL: String(process.env.NEXT_PUBLIC_PATH),
   });
-  console.log(person);
   return person.data;
 };

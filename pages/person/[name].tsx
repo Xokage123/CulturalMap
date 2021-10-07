@@ -1,5 +1,5 @@
 // Next
-import type { InferGetStaticPropsType } from 'next';
+import type { InferGetStaticPropsType, GetStaticPaths } from 'next';
 import { useRouter, NextRouter } from 'next/router';
 // Data
 import { arrayPathsRouting } from 'data/persons';
@@ -13,39 +13,50 @@ const InformationAboutPerson = (
 	props: InferGetStaticPropsType<typeof getStaticProps>
 ) => {
 	const { personInfo } = props;
-	console.log(personInfo);
 	const router: NextRouter = useRouter();
+	if (router.isFallback) {
+		return <div>Loading...</div>;
+	}
 	return (
 		<div>
 			<Button onClick={() => router.back()} variant="outlined" color="error">
 				Назад
 			</Button>
 			<Typography variant="h2" gutterBottom>
-				{personInfo.initial}
+				{personInfo.initial ? personInfo.initial : 'Error'}
 			</Typography>
 			<Typography variant="h4" gutterBottom>
 				Текстовая информация
 			</Typography>
 			<Typography variant="body1" gutterBottom>
-				{personInfo.infarmation}
+				{personInfo.infarmation ? personInfo.infarmation : 'Error'}
 			</Typography>
 		</div>
 	);
 };
 
-export async function getStaticPaths() {
+export const getStaticPaths: GetStaticPaths = async () => {
 	return {
 		paths: arrayPathsRouting,
 		fallback: true,
 	};
-}
+};
+
 export const getStaticProps = async ({ params }: any) => {
-	const personInfo = await getPerson(params.name);
-	return {
-		props: {
-			personInfo,
-		},
-	};
+	try {
+		const personInfo = await getPerson(params.name);
+		return {
+			props: {
+				personInfo,
+			},
+		};
+	} catch (er) {
+		return {
+			props: {
+				personInfo: {},
+			},
+		};
+	}
 };
 
 export default InformationAboutPerson;

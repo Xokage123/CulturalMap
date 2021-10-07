@@ -1,5 +1,5 @@
 // Next
-import type { InferGetStaticPropsType } from 'next';
+import type { InferGetStaticPropsType, GetStaticPaths } from 'next';
 import { NextRouter, useRouter } from 'next/router';
 import dynamic from 'next/dynamic';
 // Components
@@ -23,8 +23,11 @@ const CreateLayer = dynamic(
 const InformationAboutMap = (
 	props: InferGetStaticPropsType<typeof getStaticProps>
 ) => {
-	console.log(props);
 	const router: NextRouter = useRouter();
+
+	if (router.isFallback) {
+		return <div>Loading...</div>;
+	}
 	return (
 		<>
 			<Button onClick={() => router.back()} variant="outlined" color="error">
@@ -36,19 +39,27 @@ const InformationAboutMap = (
 	);
 };
 
-export async function getStaticPaths() {
+export const getStaticPaths: GetStaticPaths = async () => {
 	return {
 		paths: arrayPathsRouting,
 		fallback: true,
 	};
-}
+};
 export const getStaticProps = async ({ params }: any) => {
-	const personInfo = await getPerson(params.name);
-	return {
-		props: {
-			personInfo,
-		},
-	};
+	try {
+		const personInfo = await getPerson(params.name);
+		return {
+			props: {
+				personInfo,
+			},
+		};
+	} catch (er) {
+		return {
+			props: {
+				personInfo: {},
+			},
+		};
+	}
 };
 
 export default InformationAboutMap;
