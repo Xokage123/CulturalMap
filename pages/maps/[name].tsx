@@ -30,9 +30,7 @@ const CreateLayer = dynamic(
 const InformationAboutMap = (
 	props: InferGetStaticPropsType<typeof getStaticProps>
 ) => {
-	console.log(props);
 	const { personInfo } = props;
-	const { initial, information } = personInfo;
 	const router: NextRouter = useRouter();
 	if (router.isFallback) {
 		return <div>Loading...</div>;
@@ -51,7 +49,7 @@ const InformationAboutMap = (
 			</Button>
 			<section>
 				<Map
-					arrayPlaceInfo={information ? information : []}
+					arrayPlaceInfo={personInfo ? personInfo.information : []}
 					DynamicElement={CreateLayer}
 				/>
 				<Accordion>
@@ -106,10 +104,7 @@ export const getStaticProps = async ({ params }: any) => {
 	} catch (er) {
 		return {
 			props: {
-				personInfo: {
-					initial: '',
-					information: [],
-				},
+				personInfo: null,
 			},
 		};
 	}

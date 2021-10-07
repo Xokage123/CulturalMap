@@ -11,21 +11,27 @@ import styles from './map.module.scss';
 
 export const Map: React.FC<IMapProps> = (props) => {
 	const { DynamicElement, arrayPlaceInfo } = props;
-	return (
-		<>
-			<div
-				style={{
-					border: `2px solid ${blue[500]}`,
-				}}
-				id={styles.Map}
-			></div>
-			{generateContentForPopup(styles.Popup, arrayPlaceInfo[0])}
-			<DynamicElement
-				arrayPlaceInfo={arrayPlaceInfo}
-				mapConfig={startConfigForMap}
-				nameContainer={styles.Map}
-				namePopup={styles.Popup}
-			/>
-		</>
-	);
+	const gerenareContent = () => {
+		if (arrayPlaceInfo.length) {
+			return (
+				<>
+					<div
+						style={{
+							border: `2px solid ${blue[500]}`,
+						}}
+						id={styles.Map}
+					></div>
+					{generateContentForPopup(styles.Popup, arrayPlaceInfo[0])}
+					<DynamicElement
+						arrayPlaceInfo={arrayPlaceInfo}
+						mapConfig={startConfigForMap}
+						nameContainer={styles.Map}
+						namePopup={styles.Popup}
+					/>
+				</>
+			);
+		}
+		return <div>Loading...</div>;
+	};
+	return <>{gerenareContent()}</>;
 };
