@@ -116,6 +116,7 @@ export const getStaticProps = async () => {
 			},
 		};
 	} catch (er) {
+		console.log(er);
 		return {
 			props: {
 				persons: [],

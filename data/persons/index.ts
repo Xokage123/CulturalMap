@@ -23,6 +23,16 @@ export const arrayDirections = [
   NameDirections.HISTORY,
 ];
 
+export const NULLObjectPerson: IPersonInformation = {
+  initial: '',
+  RUS_initial: '',
+  infarmation: [],
+  working: [],
+  RUS_working: [],
+  century: [],
+  photos: [],
+};
+
 // Масим со всеми личностями
 export const arrayPersons: Array<IPersonInformation> = [
   // Карамзин

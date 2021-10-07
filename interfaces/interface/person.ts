@@ -6,6 +6,7 @@ import type {
 } from 'interfaces/type/person';
 
 export interface IPersonInformation {
+  error?: boolean;
   // Инициалы
   initial: string;
   // Инициалы на русском

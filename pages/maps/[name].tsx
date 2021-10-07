@@ -2,10 +2,13 @@
 import type { InferGetStaticPropsType, GetStaticPaths } from 'next';
 import { NextRouter, useRouter } from 'next/router';
 import dynamic from 'next/dynamic';
+// React
+import { useState } from 'react';
 // Components
 import { Map } from 'components/Map';
 // Data
 import { arrayPathsRouting } from 'data/persons';
+import { NULLInfo } from 'data/map';
 // Api
 import { getMapInfo } from 'API/map';
 // Interface
@@ -30,11 +33,15 @@ const CreateLayer = dynamic(
 const InformationAboutMap = (
 	props: InferGetStaticPropsType<typeof getStaticProps>
 ) => {
-	const { personInfo } = props;
+	const [personInfo, setPersonInfo] = useState<ICoordinate>(() => {
+		return props.personInfo ? JSON.parse(props.personInfo) : NULLInfo;
+	});
 	const router: NextRouter = useRouter();
+
 	if (router.isFallback) {
 		return <div>Loading...</div>;
 	}
+
 	return (
 		<>
 			<Button
@@ -98,13 +105,13 @@ export const getStaticProps = async ({ params }: any) => {
 		const personInfo: ICoordinate = await getMapInfo(params.name);
 		return {
 			props: {
-				personInfo,
+				personInfo: JSON.stringify(personInfo),
 			},
 		};
 	} catch (er) {
 		return {
 			props: {
-				personInfo: null,
+				personInfo: JSON.stringify(NULLInfo),
 			},
 		};
 	}

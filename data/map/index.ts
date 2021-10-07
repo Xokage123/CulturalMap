@@ -12,6 +12,12 @@ import { ICoordinate } from 'interfaces/interface/map';
 // Начальные параметры для карты
 export const ZOOM = 10;
 
+export const NULLInfo: ICoordinate = {
+  initial: '',
+  RUS_initial: '',
+  information: [],
+};
+
 // Жизненный путь карамзина
 export const coordinateKaramzin: ICoordinate = {
   initial: PersonInitial.KARAMZIN,

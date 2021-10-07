@@ -16,7 +16,6 @@ export interface IMapProps {
   DynamicElement: ComponentType<IDynamicProps>;
   arrayPlaceInfo: Array<IMapInformation>;
 }
-
 // Информация для карты
 export interface IMapInformation {
   // Период прибывания
@@ -34,6 +33,7 @@ export interface IMapInformation {
 }
 // Информация для массива координат
 export interface ICoordinate {
+  error?: boolean;
   initial: string;
   RUS_initial: string;
   information: Array<IMapInformation>;
