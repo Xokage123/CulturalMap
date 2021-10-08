@@ -46,7 +46,7 @@ const InformationAboutPerson = (
 	props: InferGetStaticPropsType<typeof getStaticProps>
 ) => {
 	// Информация
-	const personInfo = useMemo(() => {
+	const personInfo: IPersonInformation = useMemo(() => {
 		return props.personInfoJson
 			? JSON.parse(props.personInfoJson)
 			: NULLObjectPerson;
