@@ -8,6 +8,7 @@ import { generateContentForPopup } from 'utils/map';
 import { blue } from '@mui/material/colors';
 // Styles__My
 import styles from './map.module.scss';
+import { useEffect } from 'react';
 
 export const Map: React.FC<IMapProps> = (props) => {
 	const { DynamicElement, arrayPlaceInfo } = props;

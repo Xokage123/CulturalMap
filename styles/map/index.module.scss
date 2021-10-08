@@ -1,0 +1,14 @@
+.Map{
+  &-Container {
+    display: grid;
+    grid-template-columns: 400px 1fr;
+    grid-template-rows: 1fr;
+    gap: 50px;
+  }
+}
+
+.Navigate {
+  &-Link {
+    display: flex;
+  }
+}

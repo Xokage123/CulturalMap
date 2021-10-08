@@ -12,6 +12,9 @@ import { ICoordinate } from 'interfaces/interface/map';
 // Начальные параметры для карты
 export const ZOOM = 10;
 
+// Класс контйнера с информацией о месте
+export const CLASS_PLACE_INFO = 'placeInfo';
+
 export const NULLInfo: ICoordinate = {
   initial: '',
   RUS_initial: '',

@@ -4,13 +4,13 @@ import { ComponentType } from 'react';
 import type { TNamePeriod, TRUS_NamePeriod } from 'interfaces/type/person';
 import type { TNamePlace } from 'interfaces/type/map';
 
+// Динамические параметры
 export interface IDynamicProps {
   mapConfig: L.MapOptions;
   arrayPlaceInfo: Array<IMapInformation>;
   nameContainer: string;
   namePopup: string;
 }
-
 // Входные параметры для создания карты
 export interface IMapProps {
   DynamicElement: ComponentType<IDynamicProps>;
@@ -33,8 +33,19 @@ export interface IMapInformation {
 }
 // Информация для массива координат
 export interface ICoordinate {
-  error?: boolean;
   initial: string;
   RUS_initial: string;
   information: Array<IMapInformation>;
+}
+
+// Вызываемые функции
+export type TFunction = (props: any | undefined) => any;
+// Входные параметры для создания Marker
+export interface IMarkerProps {
+  content: IMapInformation;
+  map: L.Map;
+  coordinate: L.LatLngExpression;
+  popupContent: string;
+  config: L.MarkerOptions;
+  clickCallbak: Array<TFunction>;
 }

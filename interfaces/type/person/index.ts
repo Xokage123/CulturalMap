@@ -6,7 +6,7 @@ export type TNamePeriod =
   | Person.LivePeriod.ALL
   | Person.LivePeriod.CHILDHOOD
   | Person.LivePeriod.YOUTH;
-
+// Название периода на русском
 export type TRUS_NamePeriod =
   | ''
   | Person.RUS_LivePeriod.ALL
@@ -24,3 +24,5 @@ export type TRUS_NameDirections =
   | Person.RUS_NameDirections.HISTORY
   | Person.RUS_NameDirections.LITERATURE
   | Person.RUS_NameDirections.PAINTING;
+// Типы контента
+export type TPersonContent = 'video' | 'article';

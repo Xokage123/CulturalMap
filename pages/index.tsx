@@ -19,6 +19,22 @@ import ListItemText from '@mui/material/ListItemText';
 import PersonIcon from '@mui/icons-material/Person';
 import MapIcon from '@mui/icons-material/Map';
 import CloseIcon from '@mui/icons-material/Close';
+import { SxProps } from '@material-ui/core/node_modules/@material-ui/system';
+
+const styleItemPerson: SxProps = {
+	display: 'flex',
+	maxWidth: '100%',
+	flexWrap: 'wrap',
+	border: '2px solid black',
+	borderRadius: '20px',
+	padding: '10px',
+	boxShadow: '0 0 20px rgba(0,0,0, 1)',
+};
+const styleListPerson: SxProps = {
+	display: 'grid',
+	gridTemplateColumns: 'repeat(3, 1fr)',
+	gap: '20px',
+};
 
 const Home = ({ persons }: InferGetStaticPropsType<typeof getStaticProps>) => {
 	const [openInfo, setOpenInfo] = useState(() => {
@@ -98,7 +114,12 @@ const Home = ({ persons }: InferGetStaticPropsType<typeof getStaticProps>) => {
 
 	return (
 		<>
-			<MyList content={createContent} elements={persons} />
+			<MyList
+				styleList={styleListPerson}
+				styleItem={styleItemPerson}
+				functionCreateContent={createContent}
+				elements={persons}
+			/>
 		</>
 	);
 };
@@ -116,7 +137,6 @@ export const getStaticProps = async () => {
 			},
 		};
 	} catch (er) {
-		console.log(er);
 		return {
 			props: {
 				persons: [],

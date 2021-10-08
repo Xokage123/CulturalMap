@@ -14,20 +14,13 @@ interface ISwiperProps {
 export const MySwiper: React.FC<ISwiperProps> = (props) => {
 	const { photos } = props;
 	return (
-		<Carousel
-			style={{
-				maxWidth: '300px',
-			}}
-			indicators={false}
-			controls={false}
-			fade={false}
-		>
+		<Carousel indicators={false} controls={false} fade={false}>
 			{photos.map((photo) => {
 				return (
 					<Carousel.Item key={uuid()}>
 						<Image
-							height={300}
-							width={300}
+							height={500}
+							width={400}
 							className="d-block w-100"
 							src={photo}
 							alt="First slide"

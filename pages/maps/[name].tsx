@@ -1,25 +1,32 @@
 // Next
+import Link from 'next/link';
 import type { InferGetStaticPropsType, GetStaticPaths } from 'next';
 import { NextRouter, useRouter } from 'next/router';
 import dynamic from 'next/dynamic';
 // React
-import { useState } from 'react';
+import { useState, useMemo } from 'react';
+import uuid from 'react-uuid';
+// Router
+import routes from 'routes';
 // Components
 import { Map } from 'components/Map';
+import { MyList } from '@/components/MyList';
+import { MyLink } from '@/components/MyLink';
 // Data
 import { arrayPathsRouting } from 'data/persons';
-import { NULLInfo } from 'data/map';
+import { NULLInfo, CLASS_PLACE_INFO } from 'data/map';
+import { sxButtonClose } from 'data/Buttons';
+import * as SX_MAP from 'data/Buttons/map';
 // Api
 import { getMapInfo } from 'API/map';
 // Interface
 import type { ICoordinate } from 'interfaces/interface/map';
 // Style__Material
-import Accordion from '@mui/material/Accordion';
-import AccordionSummary from '@mui/material/AccordionSummary';
-import AccordionDetails from '@mui/material/AccordionDetails';
-import Typography from '@mui/material/Typography';
-import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import Button from '@mui/material/Button';
+import PersonIcon from '@mui/icons-material/Person';
+// Styles__MY
+import styles from 'styles/map/index.module.scss';
+import { SxProps } from '@mui/material/node_modules/@mui/system';
 
 const CreateLayer = dynamic(
 	() => {
@@ -30,6 +37,10 @@ const CreateLayer = dynamic(
 	}
 );
 
+const createContent = (element: JSX.Element) => {
+	return <div key={uuid()}>{element}</div>;
+};
+
 const InformationAboutMap = (
 	props: InferGetStaticPropsType<typeof getStaticProps>
 ) => {
@@ -38,57 +49,51 @@ const InformationAboutMap = (
 	});
 	const router: NextRouter = useRouter();
 
+	const arrayTopNavigate: Array<JSX.Element> = useMemo(() => {
+		return [
+			// Кнопка назад
+			<Button
+				key={uuid()}
+				sx={sxButtonClose}
+				onClick={() => router.back()}
+				variant="contained"
+				color="error"
+			>
+				Назад
+			</Button>,
+			// Ссылка на страницу с информацией
+			<MyLink
+				key={uuid()}
+				url={`${routes.person.path}/${personInfo.initial}`}
+				content={
+					<Button variant="contained" className={styles[`Navigate-Link`]}>
+						<PersonIcon /> Информация
+					</Button>
+				}
+			/>,
+		];
+	}, [personInfo.initial, router]);
+
 	if (router.isFallback) {
 		return <div>Loading...</div>;
 	}
 
 	return (
 		<>
-			<Button
-				sx={{
-					maxWidth: '100px',
-				}}
-				onClick={() => router.back()}
-				variant="contained"
-				color="error"
-			>
-				Назад
-			</Button>
-			<section>
+			{/* Лист с навигацией */}
+			<MyList
+				styleList={SX_MAP.maps_SX_ListNavigate}
+				styleItem={SX_MAP.maps_SX_ItemNavigate}
+				elements={arrayTopNavigate}
+				functionCreateContent={createContent}
+			/>
+			{/* Секция с картой */}
+			<section className={styles[`Map-Container`]}>
 				<Map
-					arrayPlaceInfo={personInfo ? personInfo.information : []}
+					arrayPlaceInfo={personInfo.information}
 					DynamicElement={CreateLayer}
 				/>
-				<Accordion>
-					<AccordionSummary
-						expandIcon={<ExpandMoreIcon />}
-						aria-controls="panel1a-content"
-						id="panel1a-header"
-					>
-						<Typography>Accordion 1</Typography>
-					</AccordionSummary>
-					<AccordionDetails>
-						<Typography>
-							Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-							Suspendisse malesuada lacus ex, sit amet blandit leo lobortis
-							eget.
-						</Typography>
-					</AccordionDetails>
-					<AccordionDetails>
-						<Typography>
-							Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-							Suspendisse malesuada lacus ex, sit amet blandit leo lobortis
-							eget.
-						</Typography>
-					</AccordionDetails>
-					<AccordionDetails>
-						<Typography>
-							Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-							Suspendisse malesuada lacus ex, sit amet blandit leo lobortis
-							eget.
-						</Typography>
-					</AccordionDetails>
-				</Accordion>
+				<section className={CLASS_PLACE_INFO}></section>
 			</section>
 		</>
 	);

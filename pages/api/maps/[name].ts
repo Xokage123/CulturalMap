@@ -8,7 +8,6 @@ export default function handler(
   req: NextApiRequest,
   res: NextApiResponse<ICoordinate>
 ) {
-  console.log(req.query.name);
   const person = arrayAllCoordinatesPerson.find(
     (element) => element.initial === req.query.name
   );

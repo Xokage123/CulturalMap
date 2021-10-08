@@ -2,12 +2,13 @@
 import type { InferGetStaticPropsType, GetStaticPaths } from 'next';
 import { useRouter, NextRouter } from 'next/router';
 // React
-import { useState } from 'react';
+import { useMemo } from 'react';
 import uuid from 'react-uuid';
 // Interace
 import type {
 	IPersonInformation,
 	ILiveInformationPerson,
+	IPersonContent,
 } from 'interfaces/interface/person';
 // Data
 import { arrayPathsRouting, NULLObjectPerson } from 'data/persons';
@@ -15,18 +16,41 @@ import { arrayPathsRouting, NULLObjectPerson } from 'data/persons';
 import { getPerson } from 'API/persons';
 // Components
 import { MySwiper } from 'components/MySwiper';
+import { MyList } from '@/components/MyList';
 // Style__Material
+import Accordion from '@mui/material/Accordion';
+import AccordionSummary from '@mui/material/AccordionSummary';
+import AccordionDetails from '@mui/material/AccordionDetails';
 import Button from '@material-ui/core/Button';
 import Typography from '@mui/material/Typography';
+import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
+
+const createContentLivePerson = (element: ILiveInformationPerson) => {
+	return (
+		<span key={uuid()}>
+			<Typography variant="h5" gutterBottom>
+				{element.RUS_period}
+			</Typography>
+			<Typography variant="body2" gutterBottom>
+				{element.information}
+			</Typography>
+		</span>
+	);
+};
+
+const createContentAchievements = (element: string) => {
+	return element;
+};
 
 const InformationAboutPerson = (
 	props: InferGetStaticPropsType<typeof getStaticProps>
 ) => {
-	const [personInfo, setPersonInfo] = useState<IPersonInformation>(() => {
+	// Информация
+	const personInfo = useMemo(() => {
 		return props.personInfoJson
 			? JSON.parse(props.personInfoJson)
 			: NULLObjectPerson;
-	});
+	}, [props.personInfoJson]);
 
 	const router: NextRouter = useRouter();
 
@@ -38,6 +62,7 @@ const InformationAboutPerson = (
 			<Button onClick={() => router.back()} variant="outlined" color="error">
 				Назад
 			</Button>
+			{/* Направления и года жизни */}
 			{personInfo.RUS_working.map((work: string) => {
 				return (
 					<Typography
@@ -53,27 +78,62 @@ const InformationAboutPerson = (
 					</Typography>
 				);
 			})}
+			{/* Инициалы */}
 			<Typography variant="h3" gutterBottom>
 				{personInfo.RUS_initial}
 			</Typography>
+			{/* Свайпер фотографий */}
 			<MySwiper photos={personInfo.photos} />
-			<Typography variant="h4" gutterBottom>
-				Текстовая информация
-			</Typography>
-			<span>
-				{personInfo.infarmation.map((element: ILiveInformationPerson) => {
+			{/* Аккордион с контентом */}
+			<Accordion>
+				<AccordionSummary
+					expandIcon={<ExpandMoreIcon />}
+					aria-controls="panel1a-content"
+					id="panel1a-header"
+				>
+					<Typography>Видео материалы</Typography>
+				</AccordionSummary>
+				{personInfo.content.map((element: IPersonContent) => {
 					return (
-						<span key={uuid()}>
-							<Typography variant="h5" gutterBottom>
-								{element.RUS_period}
+						<AccordionDetails key={uuid()}>
+							<Typography>
+								<iframe
+									width="560"
+									height="315"
+									src={element.url}
+									title="YouTube video player"
+									frameBorder="0"
+									allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+									allowFullScreen
+								></iframe>
 							</Typography>
-							<Typography variant="body2" gutterBottom>
-								{element.information}
-							</Typography>
-						</span>
+						</AccordionDetails>
 					);
 				})}
-			</span>
+			</Accordion>
+			{/* Основные достижения человека */}
+			<MyList
+				title="Основные достижения"
+				elements={personInfo.achievements}
+				functionCreateContent={createContentAchievements}
+				styleItem={{
+					border: '1px solid black',
+					padding: '20px',
+				}}
+				styleList={{
+					fontWeight: 700,
+					display: 'grid',
+					gap: '20px',
+				}}
+			/>
+			{/* Жизнь человека */}
+			<MyList
+				title="Текстовая информация"
+				elements={personInfo.infarmation}
+				functionCreateContent={createContentLivePerson}
+				styleItem={{}}
+				styleList={{}}
+			/>
 		</div>
 	);
 };
