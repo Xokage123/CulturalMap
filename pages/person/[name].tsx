@@ -50,7 +50,7 @@ const InformationAboutPerson = (
 		return props.personInfoJson
 			? JSON.parse(props.personInfoJson)
 			: NULLObjectPerson;
-	}, [props.personInfoJson]);
+	}, []);
 
 	const router: NextRouter = useRouter();
 
