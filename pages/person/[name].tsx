@@ -2,7 +2,7 @@
 import type { InferGetStaticPropsType, GetStaticPaths } from 'next';
 import { useRouter, NextRouter } from 'next/router';
 // React
-import { useMemo } from 'react';
+import { useMemo, useState } from 'react';
 import uuid from 'react-uuid';
 // Interace
 import type {
@@ -46,11 +46,9 @@ const InformationAboutPerson = (
 	props: InferGetStaticPropsType<typeof getStaticProps>
 ) => {
 	// Информация
-	const personInfo: IPersonInformation = useMemo(() => {
-		return props.personInfoJson
-			? JSON.parse(props.personInfoJson)
-			: NULLObjectPerson;
-	}, [props.personInfoJson]);
+	const [personInfo, setPersonInfo] = useState<IPersonInformation>(
+		JSON.parse(props.personInfoJson)
+	);
 
 	const router: NextRouter = useRouter();
 
@@ -85,7 +83,7 @@ const InformationAboutPerson = (
 			{/* Свайпер фотографий */}
 			<MySwiper photos={personInfo.photos} />
 			{/* Аккордион с контентом */}
-			{/* <Accordion>
+			<Accordion>
 				<AccordionSummary
 					expandIcon={<ExpandMoreIcon />}
 					aria-controls="panel1a-content"
@@ -110,7 +108,7 @@ const InformationAboutPerson = (
 						</AccordionDetails>
 					);
 				})}
-			</Accordion> */}
+			</Accordion>
 			{/* Основные достижения человека */}
 			<MyList
 				title="Основные достижения"
@@ -156,7 +154,7 @@ export const getStaticProps = async ({ params }: any) => {
 	} catch (er) {
 		return {
 			props: {
-				personInfoJson: null,
+				personInfoJson: JSON.stringify(NULLObjectPerson),
 			},
 		};
 	}
