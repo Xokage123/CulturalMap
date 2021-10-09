@@ -85,7 +85,7 @@ const InformationAboutPerson = (
 			{/* Свайпер фотографий */}
 			<MySwiper photos={personInfo.photos} />
 			{/* Аккордион с контентом */}
-			<Accordion>
+			{/* <Accordion>
 				<AccordionSummary
 					expandIcon={<ExpandMoreIcon />}
 					aria-controls="panel1a-content"
@@ -110,7 +110,7 @@ const InformationAboutPerson = (
 						</AccordionDetails>
 					);
 				})}
-			</Accordion>
+			</Accordion> */}
 			{/* Основные достижения человека */}
 			<MyList
 				title="Основные достижения"
