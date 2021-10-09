@@ -30,13 +30,15 @@ export const MyList: React.FC<IListProps> = (props) => {
 				</Typography>
 			) : null}
 			<List sx={styleList}>
-				{elements.map((person: any) => {
-					return (
-						<ListItem sx={styleItem} key={uuid()}>
-							{functionCreateContent(person)}
-						</ListItem>
-					);
-				})}
+				{typeof elements === 'object'
+					? elements.map((person: any) => {
+							return (
+								<ListItem sx={styleItem} key={uuid()}>
+									{functionCreateContent(person)}
+								</ListItem>
+							);
+					  })
+					: null}
 			</List>
 		</Box>
 	);
