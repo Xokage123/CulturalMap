@@ -46,9 +46,11 @@ const InformationAboutPerson = (
 	props: InferGetStaticPropsType<typeof getStaticProps>
 ) => {
 	// Информация
-	const [personInfo, setPersonInfo] = useState<IPersonInformation>(
-		JSON.parse(props.personInfoJson)
-	);
+	const [personInfo, setPersonInfo] = useState<IPersonInformation>(() => {
+		return props.personInfoJson
+			? JSON.parse(props.personInfoJson)
+			: NULLObjectPerson;
+	});
 
 	const router: NextRouter = useRouter();
 
