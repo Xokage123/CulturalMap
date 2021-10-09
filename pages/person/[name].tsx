@@ -93,7 +93,7 @@ const InformationAboutPerson = (
 				>
 					<Typography>Видео материалы</Typography>
 				</AccordionSummary>
-				{typeof personInfo.content === 'object'
+				{personInfo.content
 					? personInfo.content.map((element: IPersonContent) => {
 							return (
 								<AccordionDetails key={uuid()}>
