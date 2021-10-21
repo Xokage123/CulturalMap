@@ -3,6 +3,8 @@ import { ZOOM } from 'data/map/index';
 // Начальные параметры для карты
 export const startConfigForMap: L.MapOptions = {
   zoom: ZOOM,
+  // Отмена изменения масштаба
+  zoomControl: false,
 };
 // Стартовая концигурация для иконок
 export const startConfigIcon: L.IconOptions = {

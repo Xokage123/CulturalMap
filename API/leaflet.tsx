@@ -1,7 +1,9 @@
 // Leaflet
 import L from 'leaflet';
 // React
-import { useEffect } from 'react';
+import React, { useEffect } from 'react';
+// GSAP
+import { gsap } from 'gsap';
 // Api
 import { getInfoPlace } from 'API/yandex';
 // Config
@@ -30,6 +32,20 @@ const createLayer = (url: string) => {
 		}
 	);
 };
+
+const arrayGsapElements: Array<gsap.core.Tween> = [];
+
+const addAnimate = (ev: any, content: IMapInformation) => {
+	const animateElement = gsap.to(ev.originalEvent.target, {
+		duration: 2,
+		color: 'red',
+		boxShadow: '0 0 20px black',
+		yoyo: true,
+		repeat: -1,
+	});
+	arrayGsapElements.push(animateElement);
+};
+
 // Добавление маркера на конкретные координат
 const addMarkerWithPopupToMap: TAddMarkerWithPopupToMap = ({
 	content,
@@ -46,13 +62,26 @@ const addMarkerWithPopupToMap: TAddMarkerWithPopupToMap = ({
 		marker.bindPopup(popupContent);
 		// Добавляем маркер в массив
 		arrayMarker.push(marker);
+		console.log(marker);
 		clickCallbak.forEach((callbak) => {
-			marker.addEventListener('click', (ev) => {
-				callbak(content);
+			marker.addOneTimeEventListener('click', (ev: L.LeafletEvent) => {
+				callbak(ev, content);
+			});
+			marker.addEventListener('popupopen', () => {
+				arrayGsapElements.forEach((element) => {
+					element.play();
+				});
+			});
+			marker.addEventListener('popupclose', () => {
+				arrayGsapElements.forEach((element) => {
+					element.restart();
+					element.pause();
+				});
 			});
 		});
 		// Добавляем к нужной нам карте
 		marker.addTo(map);
+		console.log(map);
 	}
 };
 // Стартовая конфигурация для маркера
@@ -90,7 +119,7 @@ const Component = (props: IDynamicProps) => {
 					popupContent: popupContainer ? popupContainer.innerHTML : '',
 					// Конфигурация для маркера
 					config: startConfigMarker,
-					clickCallbak: [generateContentOnPlace],
+					clickCallbak: [generateContentOnPlace, addAnimate],
 				};
 				popupContainer && propsMarker
 					? addMarkerWithPopupToMap(propsMarker)

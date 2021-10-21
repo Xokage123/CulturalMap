@@ -39,7 +39,7 @@ export interface ICoordinate {
 }
 
 // Вызываемые функции
-export type TFunction = (props: any | undefined) => any;
+export type TFunction = (ev: L.LeafletEvent, content: IMapInformation) => any;
 // Входные параметры для создания Marker
 export interface IMarkerProps {
   content: IMapInformation;

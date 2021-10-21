@@ -25,7 +25,10 @@ export const generateContentForPopup = (
 	);
 };
 // Вывоод информации о месте
-export const generateContentOnPlace = (content: IMapInformation) => {
+export const generateContentOnPlace = (
+	event: any,
+	content: IMapInformation
+) => {
 	const contentText = (
 		<>
 			<h2>Название места: {content.place}</h2>
