@@ -17,12 +17,14 @@ export type TNameDirections =
   | ''
   | Person.NameDirections.HISTORY
   | Person.NameDirections.LITERATURE
-  | Person.NameDirections.PAINTING;
+  | Person.NameDirections.PAINTING
+  | Person.NameDirections.SCIENCE;
 
 export type TRUS_NameDirections =
   | ''
   | Person.RUS_NameDirections.HISTORY
   | Person.RUS_NameDirections.LITERATURE
-  | Person.RUS_NameDirections.PAINTING;
+  | Person.RUS_NameDirections.PAINTING
+  | Person.RUS_NameDirections.SCIENCE;
 // Типы контента
 export type TPersonContent = 'video' | 'article';

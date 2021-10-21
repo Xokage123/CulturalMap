@@ -16,8 +16,11 @@ export const ZOOM = 10;
 export const CLASS_PLACE_INFO = 'placeInfo';
 
 export const NULLInfo: ICoordinate = {
+  // Инциалы
   initial: '',
+  // Инциалы на русском
   RUS_initial: '',
+  // Информация
   information: [],
 };
 
@@ -32,6 +35,24 @@ export const coordinateKaramzin: ICoordinate = {
       century: 99,
       years: [1766, 1778],
       place: PlaceName.Mikhailovka,
+      description: 'Родился в деревне Денисовка (ныне село Ломоносово)',
+    },
+  ],
+};
+
+export const coordinateLomonosov: ICoordinate = {
+  // Инциалы
+  initial: PersonInitial.LOMONOSOV,
+  // Инциалы на русском
+  RUS_initial: RUS_PersonInitial.LOMONOSOV,
+  // Информация
+  information: [
+    {
+      period: LivePeriod.CHILDHOOD,
+      RUS_period: RUS_LivePeriod.CHILDHOOD,
+      century: 18,
+      years: [1711, 1729],
+      place: PlaceName.Lomonosovo,
       description:
         'Детство в селе Михайловка Бузулукского уезда Симбирской губернии',
     },
@@ -41,4 +62,5 @@ export const coordinateKaramzin: ICoordinate = {
 // Все координаты
 export const arrayAllCoordinatesPerson: Array<ICoordinate> = [
   coordinateKaramzin,
+  coordinateLomonosov,
 ];

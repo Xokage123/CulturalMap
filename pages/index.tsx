@@ -1,6 +1,7 @@
 // Next
 import type { InferGetStaticPropsType } from 'next';
 import Link from 'next/link';
+import Image from 'next/image';
 import { useState, useCallback, useMemo } from 'react';
 // Router
 import routes from 'routes';
@@ -11,15 +12,20 @@ import { IPersonInformation } from 'interfaces/interface/person';
 // Axios
 import axios from 'axios';
 // Style__Material-Core
+import Box from '@mui/material/Box';
 import Snackbar from '@mui/material/Snackbar';
 import IconButton from '@mui/material/IconButton';
 import ListItemButton from '@mui/material/ListItemButton';
 import ListItemIcon from '@mui/material/ListItemIcon';
 import ListItemText from '@mui/material/ListItemText';
+import Typography from '@mui/material/Typography';
 import PersonIcon from '@mui/icons-material/Person';
 import MapIcon from '@mui/icons-material/Map';
 import CloseIcon from '@mui/icons-material/Close';
-import { SxProps } from '@material-ui/core/node_modules/@material-ui/system';
+import {
+	padding,
+	SxProps,
+} from '@material-ui/core/node_modules/@material-ui/system';
 
 const styleItemPerson: SxProps = {
 	display: 'flex',
@@ -70,14 +76,25 @@ const Home = ({ persons }: InferGetStaticPropsType<typeof getStaticProps>) => {
 
 	const createContent = (person: IPersonInformation) => {
 		return (
-			<>
-				<h4
-					style={{
+			<Box sx={{}}>
+				<Typography
+					sx={{
 						textAlign: 'center',
 					}}
+					variant="h5"
+					gutterBottom
+					component="div"
 				>
 					{person.RUS_initial}
-				</h4>
+				</Typography>
+				{person.photos.length ? (
+					<Image
+						width={200}
+						height={200}
+						src={person.photos[0]}
+						alt="title Photo"
+					/>
+				) : null}
 				<Link href={`${routes.person.path}/${person.initial}`} passHref>
 					<ListItemButton onClick={handleClick}>
 						<ListItemIcon>
@@ -103,12 +120,11 @@ const Home = ({ persons }: InferGetStaticPropsType<typeof getStaticProps>) => {
 				</Link>
 				<Snackbar
 					open={openInfo}
-					autoHideDuration={6000}
 					onClose={handleClose}
 					message="Подождите, переход выполняется"
 					action={action}
 				/>
-			</>
+			</Box>
 		);
 	};
 

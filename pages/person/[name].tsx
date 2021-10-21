@@ -4,6 +4,8 @@ import { useRouter, NextRouter } from 'next/router';
 // React
 import { useMemo, useState } from 'react';
 import uuid from 'react-uuid';
+// Router
+import routes from 'routes';
 // Interace
 import type {
 	IPersonInformation,
@@ -12,11 +14,13 @@ import type {
 } from 'interfaces/interface/person';
 // Data
 import { arrayPathsRouting, NULLObjectPerson } from 'data/persons';
+import * as SX_MAP from 'data/Buttons/map';
 // Api
 import { getPerson } from 'API/persons';
 // Components
 import { MySwiper } from 'components/MySwiper';
 import { MyList } from '@/components/MyList';
+import { MyLink } from '@/components/MyLink';
 // Style__Material
 import Accordion from '@mui/material/Accordion';
 import AccordionSummary from '@mui/material/AccordionSummary';
@@ -24,6 +28,11 @@ import AccordionDetails from '@mui/material/AccordionDetails';
 import Button from '@material-ui/core/Button';
 import Typography from '@mui/material/Typography';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
+import MapIcon from '@mui/icons-material/Map';
+
+const createContentNavigationTop = (element: any) => {
+	return element;
+};
 
 const createContentLivePerson = (element: ILiveInformationPerson) => {
 	return (
@@ -54,14 +63,41 @@ const InformationAboutPerson = (
 
 	const router: NextRouter = useRouter();
 
+	const elementsNavigationTop: Array<JSX.Element> = useMemo(() => {
+		return [
+			// Кнопка назад
+			<Button
+				key={uuid()}
+				onClick={() => router.back()}
+				variant="outlined"
+				color="error"
+			>
+				Назад
+			</Button>,
+			// Ссылка на страницу с информацией
+			<MyLink
+				key={uuid()}
+				url={`${routes.map.path}/${personInfo.initial}`}
+				content={
+					<Button variant="contained">
+						<MapIcon /> Карта
+					</Button>
+				}
+			/>,
+		];
+	}, []);
+
 	if (router.isFallback) {
 		return <div>Loading...</div>;
 	}
 	return (
 		<div>
-			<Button onClick={() => router.back()} variant="outlined" color="error">
-				Назад
-			</Button>
+			<MyList
+				elements={elementsNavigationTop}
+				functionCreateContent={createContentNavigationTop}
+				styleList={SX_MAP.maps_SX_ListNavigate}
+				styleItem={SX_MAP.maps_SX_ItemNavigate}
+			/>
 			{/* Направления и года жизни */}
 			{personInfo.RUS_working.map((work: string) => {
 				return (

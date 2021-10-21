@@ -9,10 +9,12 @@ import {
   RUS_PersonInitial,
   LivePeriod,
 } from 'interfaces/enum/person';
-// Photo
+// Photo__KARAMZIN
 import KARAMZIN_PHOTO_1 from 'public/photo/person/karamzin/1.jpg';
 import KARAMZIN_PHOTO_2 from 'public/photo/person/karamzin/2.jpg';
 import KARAMZIN_PHOTO_3 from 'public/photo/person/karamzin/3.jpg';
+// Photo__LOMONOSOV
+import LOMONOSOV_PHOTO_1 from 'public/photo/person/lomonosov/1.jpg';
 
 // Динамические параметр
 const DYNAMIC_PARAMETER = 'name';
@@ -21,17 +23,27 @@ export const arrayDirections = [
   NameDirections.LITERATURE,
   NameDirections.PAINTING,
   NameDirections.HISTORY,
+  NameDirections.SCIENCE,
 ];
 
 export const NULLObjectPerson: IPersonInformation = {
+  // Инициалы
   initial: '',
+  // Инициалы на русском
   RUS_initial: '',
+  // Основные достижения
   achievements: [],
+  // Информация о жизни
   infarmation: [],
+  // Направления
   working: [],
+  // Направления на русском
   RUS_working: [],
+  // Века
   century: [],
+  // Фотографии
   photos: [],
+  // Дополнительный контент
   content: [],
 };
 
@@ -39,32 +51,23 @@ export const NULLObjectPerson: IPersonInformation = {
 export const arrayPersons: Array<IPersonInformation> = [
   // Карамзин
   {
-    // Инициалы
     initial: PersonInitial.KARAMZIN,
-    // Инициалы на русском
     RUS_initial: RUS_PersonInitial.KARAMZIN,
-    // Века жизни
     century: [18, 19],
-    // Направление
     working: [NameDirections.LITERATURE, NameDirections.HISTORY],
-    // Напрвления на русском
     RUS_working: [RUS_NameDirections.LITERATURE, RUS_NameDirections.HISTORY],
-    // Основные свершения
     achievements: [
       `Алескандр Первый назначил Карамзина историографом. 23 года Карамзин работал над своим трудом “История государства Российского”. В описании истории государства не дошел до своего времени, т.к. умер в 1826 году. Пушкин почерпнул материал для “Бориса Годунова”. `,
       `Карамзин обновлял русских язык - отказывался от церковнославянизмов, вводил такие слова, как “ответственность”, “вольнодумство”, “утонченность”, “человечный”, и т.д. Также одним из первых начал вводить в употребление букву “Ё”. Начало XIX века стало временем ожесточенной полемики между обществом «Беседа любителей русского слова» во главе с Шишковым и обществом «Арзамас», который представляли Жуковский, Карамзин, Пушкин, Вяземский, Батюшков.`,
       `Карамзин стал первым русским профессиональным литератором, он принимал участие в создании журналов («Московский журнал», «Вестник Европы»), в которых  публиковал не только произведения российских и западноевропейских авторов, но и собственные произведения. Публикация «Бедной Лизы» и «Писем русского путешественника» принесли ему всероссийское признание и известность.`,
     ],
-    // Фотографии
     photos: [KARAMZIN_PHOTO_1, KARAMZIN_PHOTO_2, KARAMZIN_PHOTO_3],
-    // Контент
     content: [
       {
         type: 'video',
         url: 'https://www.youtube.com/embed/S5JiPtUfr7E',
       },
     ],
-    // Информация
     infarmation: [
       {
         period: LivePeriod.ALL,
@@ -103,6 +106,18 @@ export const arrayPersons: Array<IPersonInformation> = [
         ],
       },
     ],
+  },
+  // Ломоносов
+  {
+    initial: PersonInitial.LOMONOSOV,
+    RUS_initial: RUS_PersonInitial.LOMONOSOV,
+    achievements: [],
+    infarmation: [],
+    working: [NameDirections.SCIENCE],
+    RUS_working: [],
+    century: [18],
+    photos: [LOMONOSOV_PHOTO_1],
+    content: [],
   },
 ];
 

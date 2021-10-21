@@ -7,15 +7,16 @@ import dynamic from 'next/dynamic';
 import { useState, useMemo } from 'react';
 import uuid from 'react-uuid';
 // Router
-import routes from 'routes';
+import routes, { goBack } from 'routes';
 // Components
 import { Map } from 'components/Map';
 import { MyList } from '@/components/MyList';
 import { MyLink } from '@/components/MyLink';
+import { ButtonBack } from '@/components/MyButton/ButtonBack';
 // Data
 import { arrayPathsRouting } from 'data/persons';
 import { NULLInfo, CLASS_PLACE_INFO } from 'data/map';
-import { sxButtonClose } from 'data/Buttons';
+// import { sxButtonClose } from 'data/Buttons';
 import * as SX_MAP from 'data/Buttons/map';
 // Api
 import { getMapInfo } from 'API/map';
@@ -24,9 +25,8 @@ import type { ICoordinate } from 'interfaces/interface/map';
 // Style__Material
 import Button from '@mui/material/Button';
 import PersonIcon from '@mui/icons-material/Person';
-// Styles__MY
+// Styles__My
 import styles from 'styles/map/index.module.scss';
-import { SxProps } from '@mui/material/node_modules/@mui/system';
 
 const CreateLayer = dynamic(
 	() => {
@@ -52,16 +52,7 @@ const InformationAboutMap = (
 	const arrayTopNavigate: Array<JSX.Element> = useMemo(() => {
 		return [
 			// Кнопка назад
-			<Button
-				key={uuid()}
-				sx={sxButtonClose}
-				onClick={() => router.back()}
-				variant="contained"
-				color="error"
-			>
-				Назад
-			</Button>,
-			// Ссылка на страницу с информацией
+			<ButtonBack callbackFunctions={[() => goBack(router)]} key={uuid()} />,
 			<MyLink
 				key={uuid()}
 				url={`${routes.person.path}/${personInfo.initial}`}
